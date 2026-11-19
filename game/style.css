@@ -1,0 +1,120 @@
+/* SUNDOWN: Port Meridian — Dusk theme. Smoked-glass panels, bone ink,
+   periwinkle signals, apricot for confirmed actions. System fonts only,
+   everything local. */
+
+:root {
+  --ground: #26272f;
+  --ink: #e7e5de;
+  --signal: #9a9ae5;
+  --apricot: #eab38a;
+  --panel: rgba(24, 25, 34, 0.78);
+  --line: rgba(231, 229, 222, 0.22);
+  --muted: #b9b7ae;
+  --danger: #ff6a5a;
+  --cash: #7ee2a0;
+  --faint: #cfcdc4;
+  --dim: #9a988e;
+  --ink-dark: #1a1b26;
+  --sea: #1d3a4d;
+  --road-line: #6a6b78;
+  --hot: #e5534b;
+  --alert: #ff5a4a;
+  --map-bg: rgba(20, 21, 30, 0.85);
+}
+
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--ground); }
+body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); }
+#game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+#status, #game-error, #shot-ready { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#game-error { color: var(--danger); }
+
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+#hud button { pointer-events: auto; }
+
+#logo {
+  position: absolute; top: 14px; left: 16px;
+  font-size: 30px; font-weight: 800; letter-spacing: 2px; line-height: 0.9;
+  color: var(--ink); text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+  background: rgba(16, 17, 24, 0.55); padding: 6px 10px 8px; border-radius: 8px;
+}
+#logo span { display: block; font-size: 12px; letter-spacing: 2px; color: var(--apricot); font-weight: 600; margin-top: 4px; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9); }
+
+.panel {
+  position: absolute; background: var(--panel);
+  border: 1px solid var(--line); border-top: 2px solid var(--signal);
+  border-radius: 8px; padding: 10px 12px; backdrop-filter: blur(4px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+.panel-title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px; }
+.panel-title span { color: var(--signal); font-weight: 600; float: right; }
+.objective { font-size: 14px; line-height: 1.35; }
+.objective .box { color: var(--apricot); margin-right: 6px; }
+.sub { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.35; }
+
+#mission-panel { top: 64px; left: 16px; width: 330px; }
+#police-panel { top: 196px; left: 16px; width: 330px; }
+.unit { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; border-top: 1px solid rgba(231, 229, 222, 0.08); }
+.unit-name { font-weight: 700; }
+.unit-status { color: var(--signal); font-weight: 600; }
+.unit-status.hot { color: var(--danger); }
+
+#cash-panel { position: absolute; top: 14px; right: 16px; text-align: right; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); }
+#cash { font-size: 30px; font-weight: 800; color: var(--cash); }
+#stars { font-size: 26px; letter-spacing: 4px; color: var(--ink); }
+#stars.hot { color: var(--danger); }
+
+#minimap {
+  position: fixed; left: 16px; bottom: 16px; width: 220px; height: 220px;
+  border: 1px solid var(--line); border-top: 2px solid var(--signal);
+  border-radius: 8px; z-index: 6; background: rgba(20, 21, 30, 0.85);
+}
+#speedo { position: fixed; right: 16px; bottom: 16px; z-index: 6; display: none; }
+#speedo canvas { width: 190px; height: 190px; }
+
+#message {
+  position: absolute; top: 22%; left: 50%; transform: translateX(-50%);
+  font-size: 18px; font-weight: 600; text-align: center;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.4s; pointer-events: none;
+}
+#hint {
+  position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+  font-size: 13px; color: var(--faint); text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+}
+#banner {
+  position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%);
+  background: var(--panel); border: 1px solid var(--line); border-top: 2px solid var(--apricot);
+  border-radius: 10px; padding: 18px 26px; font-size: 20px; font-weight: 700;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.overlay {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(16, 17, 24, 0.55); pointer-events: auto; z-index: 20;
+}
+#banner.hidden { display: none; }
+.overlay.hidden { display: none; }
+.menu-card {
+  width: min(620px, 92vw); max-height: 92vh; overflow: auto;
+  background: var(--panel); border: 1px solid var(--line); border-top: 2px solid var(--signal);
+  border-radius: 12px; padding: 26px 30px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.menu-card h1 { margin: 0 0 4px; font-size: 42px; letter-spacing: 3px; }
+.tagline { color: var(--apricot); font-size: 15px; margin: 0 0 12px; }
+#menu-story { font-size: 14px; line-height: 1.5; color: var(--faint); }
+.menu-buttons { display: flex; gap: 10px; margin: 16px 0; flex-wrap: wrap; }
+.menu-buttons button {
+  background: var(--signal); color: var(--ink-dark); border: none; border-radius: 6px;
+  padding: 11px 18px; font-size: 15px; font-weight: 700; cursor: pointer;
+}
+.menu-buttons button:hover { background: var(--apricot); }
+.controls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; font-size: 13px; color: var(--faint); }
+.controls-grid b { color: var(--ink); display: inline-block; min-width: 74px; }
+.menu-note { font-size: 12px; color: var(--dim); margin-top: 14px; }
+
+@media (max-width: 900px) {
+  #mission-panel, #police-panel { width: 260px; }
+  #police-panel { top: 210px; }
+  #minimap { width: 160px; height: 160px; }
+}
