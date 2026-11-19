@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUNDOWN: Port Meridian</title>
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.min.js" } }
+</script>
+</head>
+<body>
+<canvas id="game" aria-label="SUNDOWN Port Meridian: drive the blue Vela Mariner, lose the PMPD pursuit, and finish the jobs"></canvas>
+<div id="hud"></div>
+<canvas id="minimap" width="220" height="220" aria-label="Minimap of Port Meridian"></canvas>
+<p id="status" role="status" aria-live="polite"></p>
+<p id="game-error" role="alert"></p>
+<p id="shot-ready" aria-hidden="true"></p>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
